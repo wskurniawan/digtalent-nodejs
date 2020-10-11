@@ -32,7 +32,7 @@
     <table class="table" style="margin-top: 56px;">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">Id</th>
           <th scope="col">Name</th>
           <th scope="col">Price</th>
           <th scope="col">Photo</th>
@@ -40,15 +40,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Example</td>
-          <td>2000</td>
-          <td>-</td>
-          <td>
-            <a href="#" type="button" class="btn btn-danger">Delete</a>
-          </td>
-        </tr>
+        {{#each products}}
+          <tr>
+            <th scope="row">{{ id }}</th>
+            <td>{{ name }}</td>
+            <td>{{ price }}</td>
+            <td>-</td>
+            <td>
+              <a href="#" type="button" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
   </div>

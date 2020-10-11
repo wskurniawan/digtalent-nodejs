@@ -64,9 +64,8 @@ app.get('/search-product-handler', (req, res, next) => {
 })
 
 app.get('/product', async (req, res, next) => {
-  const product = await getProduct(db)
-  console.log(product)
-  res.render('product')
+  const products = await getProduct(db)
+  res.render('product', { products })
 })
 
 app.post('/product', (req, res, next) => {
