@@ -6,6 +6,7 @@ const __dirname = path.resolve()
 
 const app = express()
 
+app.use('/assets', express.static(path.join(__dirname, '/assets')))
 app.set('views', path.join(__dirname, '/layout'))
 app.set('view engine', 'html')
 app.engine('html', hbs.__express)
