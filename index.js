@@ -7,7 +7,7 @@ import joi from 'joi'
 import fileUpload from 'express-fileupload'
 import fs from 'fs'
 
-import { connectDB, initTable, insertProduct, getProduct } from './database.js'
+import { connectDB, initTable, insertProduct, getProduct, deleteProduct } from './database.js'
 
 const __dirname = path.resolve()
 
@@ -97,6 +97,12 @@ app.post('/product', (req, res, next) => {
     insertProduct(db, req.body.name, req.body.price, `/files/${filename}`)
     return res.redirect('/product')
   })
+})
+
+app.get('/delete/product/:id', async (req, res, next) => {
+  const id = parseInt(req.params.id)
+  await deleteProduct(db, id)
+  res.redirect('/product')
 })
 
 app.use((req, res, next) => {
