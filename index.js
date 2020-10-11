@@ -23,6 +23,10 @@ app.get('/search-product', (req, res, next) => {
   res.render('search-product')
 })
 
+app.get('/search-product-handler', (req, res, next) => {
+  res.send(req.query)
+})
+
 app.use((req, res, next) => {
   return next(new Error('404: Halaman tidak ditemukan'))
 })

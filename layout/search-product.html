@@ -12,9 +12,9 @@
     <div class="card" style="width: 18rem; margin-top: 42px;">
       <div class="card-body">
         <h5 class="card-title">Search Product</h5>
-        <form>
+        <form method="GET" action="/search-product-handler">
           <div class="form-group">
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="searchHelp">
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="searchHelp" name="product">
             <small id="searchHelp" class="form-text text-muted">Enter product name</small>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
