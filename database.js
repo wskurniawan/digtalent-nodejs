@@ -1,35 +1,53 @@
-import mysql from 'mysql'
+import sqlite from 'sqlite3'
 
 export function connectDB() {
-  return mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'product_catalog',
+  return new sqlite.Database('data', (err) => {
+    if (err) {
+      throw err
+    }
+
+    console.log('db created')
   })
 }
 
 /**
  * 
- * @param {mysql.Connection} dbConnection 
+ * @param {sqlite.Database} db 
+ */
+export function initTable(db) {
+  db.serialize(() => {
+    db.run(`CREATE TABLE IF NOT EXISTS product  (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      photo TEXT NOT NULL,
+      name VARCHAR(56) NOT NULL,
+      price INTEGER NOT NULL
+    );`)
+  })
+}
+
+/**
+ * 
+ * @param {sqlite.Database} db 
  * @param {string} name 
  * @param {number} price 
  * @param {string} photo 
  */
-export function insertProduct(dbConnection, name, price, photo) {
-  dbConnection.query('INSERT INTO product SET ?', { name, price, photo }, (err) => {
-    if(err) {
-      console.log(err)
+export function insertProduct(db, name, price, photo) {
+  db.run('INSERT INTO product (photo,name,price) VALUES ($photo,$name,$price)', { $photo: photo, $name: name, $price: price }, (err) => {
+    if (err) {
       throw err
     }
+
+    console.log('product saved')
   })
 }
 
 /**
  * 
- * @param {mysql.Connection} dbConnection 
+ * @param {sqlite.Database} db 
  */
-export function getProduct(dbConnection) {
-  dbConnection.query('SELECT * FROM product', (err, result) => {
+export function getProduct(db) {
+  db.get('SELECT * FROM product', (stmt, err, result) => {
     if(err) {
       console.log(err)
       throw err
