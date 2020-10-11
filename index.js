@@ -1,11 +1,14 @@
 import express from 'express'
 import hbs from 'hbs'
 import path from 'path'
+import morgan from 'morgan'
 
 const __dirname = path.resolve()
 
 const app = express()
 
+
+app.use(morgan('dev'))
 app.use('/assets', express.static(path.join(__dirname, '/assets')))
 app.set('views', path.join(__dirname, '/layout'))
 app.set('view engine', 'html')
