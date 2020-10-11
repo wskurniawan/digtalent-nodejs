@@ -5,12 +5,13 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import joi from 'joi'
 
-import { connectDB } from './database.js'
+import { connectDB, initTable, insertProduct, getProduct } from './database.js'
 
 const __dirname = path.resolve()
 
 const app = express()
 const db = connectDB()
+initTable(db)
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -63,7 +64,29 @@ app.get('/search-product-handler', (req, res, next) => {
 })
 
 app.get('/product', (req, res, next) => {
-  res.render('product')
+  getProduct(db).then(result => {
+    console.log(result)
+    res.render('product')
+  }).catch(error => {
+    next(error)
+  })
+})
+
+app.post('/product', (req, res, next) => {
+  const schema = joi.object({
+    name: joi.string().required(),
+    price: joi.number().required()
+  })
+
+  const result = schema.validate(req.body)
+  if (result.error) {
+    return next(result.error)
+  }
+
+  return next()
+}, (req, res, next) => {
+  insertProduct(db, req.body.name, req.body.price, '')
+  return res.redirect('/product')
 })
 
 app.use((req, res, next) => {
