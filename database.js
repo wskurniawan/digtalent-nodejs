@@ -1,10 +1,10 @@
-import mysql from 'mysql2'
+import mysql from 'mysql'
 
 export function connectDB() {
   return mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    database: 'product_catalog'
+    database: 'product_catalog',
   })
 }
 
