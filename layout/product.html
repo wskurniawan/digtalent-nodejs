@@ -13,7 +13,7 @@
       <div class="card" style="width: 18rem; margin-top: 42px;">
         <div class="card-body">
           <h5 class="card-title">Add Product</h5>
-          <form method="POST" action="/product">
+          <form method="POST" action="/product" enctype="multipart/form-data">
             <div class="form-group">
               <label for="productName">Name</label>
               <input type="text" class="form-control" id="productName" aria-describedby="productHelp" name="name">
@@ -22,6 +22,10 @@
             <div class="form-group">
               <label for="productPrice">Price</label>
               <input type="number" class="form-control" id="productPrice" name="price">
+            </div>
+            <div class="form-group">
+              <label for="productPrice">Photo</label>
+              <input type="file" class="form-control" id="productPhoto" name="photo">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -45,7 +49,7 @@
             <th scope="row">{{ id }}</th>
             <td>{{ name }}</td>
             <td>{{ price }}</td>
-            <td>-</td>
+            <td><img width="128" src="{{ photo }}"></td>
             <td>
               <a href="#" type="button" class="btn btn-danger">Delete</a>
             </td>
