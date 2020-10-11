@@ -63,13 +63,10 @@ app.get('/search-product-handler', (req, res, next) => {
   res.send(req.query)
 })
 
-app.get('/product', (req, res, next) => {
-  getProduct(db).then(result => {
-    console.log(result)
-    res.render('product')
-  }).catch(error => {
-    next(error)
-  })
+app.get('/product', async (req, res, next) => {
+  const product = await getProduct(db)
+  console.log(product)
+  res.render('product')
 })
 
 app.post('/product', (req, res, next) => {
