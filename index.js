@@ -5,9 +5,12 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import joi from 'joi'
 
+import { connectDB } from './database'
+
 const __dirname = path.resolve()
 
 const app = express()
+const db = connectDB()
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
