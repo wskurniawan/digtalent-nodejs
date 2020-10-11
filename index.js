@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import express from 'express'
 import hbs from 'hbs'
 import path from 'path'
@@ -8,6 +11,7 @@ import fileUpload from 'express-fileupload'
 import fs from 'fs'
 
 import { connectDB, initTable, insertProduct, getProduct, deleteProduct } from './database.js'
+import { sendMailNotification } from './email.js'
 
 const __dirname = path.resolve()
 
@@ -102,6 +106,7 @@ app.post('/product', (req, res, next) => {
 app.get('/delete/product/:id', async (req, res, next) => {
   const id = parseInt(req.params.id)
   await deleteProduct(db, id)
+  sendMailNotification(`Produk id ${id} telah dihapus`)
   res.redirect('/product')
 })
 
