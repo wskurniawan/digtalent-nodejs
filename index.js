@@ -65,7 +65,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   console.log(err.message)
-  res.render('default-error')
+  res.render('default-error', { errorMessage: err.message })
 })
 
 app.listen(8000, () => {
